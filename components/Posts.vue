@@ -6,7 +6,12 @@
       </div>
       <div class="col-span-2">
         <div v-for="post in posts" :key="post.id">
-          <PostBox :title="post.title" :desc="post.body" />
+          <!-- <NuxtLink to="{name: 'post', params: { id:post.id } }">
+            <PostBox :title="post.title" :desc="post.body" />
+          </NuxtLink> -->
+          <NuxtLink :to="`/post/${post.id}`">
+            <PostBox :title="post.title" :desc="post.body" />
+          </NuxtLink>
         </div>
       </div>
       <div>
@@ -53,7 +58,6 @@ export default {
       this.$axios
         .$get("https://jsonplaceholder.typicode.com/posts")
         .then((res) => {
-          console.log("hi my response", res);
           this.posts = res;
         })
         .catch((error) => {

@@ -9,10 +9,6 @@
 export default {
   name: "PostBox",
   props: ["title", "desc"],
-  created() {
-    console.log("hi ", this);
-    // return ({ title, desc } = this.data.attrs);
-  },
 };
 </script>
 <style scoped>
