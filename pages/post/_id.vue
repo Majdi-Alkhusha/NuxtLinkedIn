@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Posts />
+    <Tutorial />
   </Layout>
 </template>
 
