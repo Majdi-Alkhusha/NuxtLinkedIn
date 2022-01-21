@@ -1,6 +1,9 @@
 <template>
   <Layout>
-    <Posts />
+    <div class="sm:container md:mx-auto">
+      <Posts />
+    </div>
+    <div class="messages">Messages</div>
   </Layout>
 </template>
 
@@ -14,3 +17,13 @@ export default {
   },
 };
 </script>
+<style scoped>
+.messages {
+  position: sticky;
+  bottom: 0;
+  left: 100%;
+  padding: 10px;
+  background-color: #fff;
+  width: 250px;
+}
+</style>

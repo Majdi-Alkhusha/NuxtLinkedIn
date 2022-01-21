@@ -6,30 +6,45 @@ const isDev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
 
 async function start() {
-    app.get("/posts", async (req, res) => {
+
+    // We get Nuxt instance
+    const nuxt = await loadNuxt(isDev ? 'dev' : 'start')
+
+    // Render every route with Nuxt
+    app.use(nuxt.render)
+
+    app.get("/post123/:id", async (req, res) => {
         console.log('=>', req.params.posts)
         try {
             const response = await axios.get("https://jsonplaceholder.typicode.com/posts")
             // res.json(response.data);
-            const actualPage = '/pages/index';
+            const actualPage = '/post';
             const queryParams = { posts: response.data };
-            // app.render(req, res, actualPage, queryParams);
-            app.render(actualPage);
+            // res.render(req, res, actualPage, queryParams);
+            // res.render('/');
+            // app.render(actualPage);
+            // nuxt.renderRoute('/');
+            // nuxt.render('/').then(result => {
+            //     res.send(result.html)
+            // });
+            nuxt.renderRoute('/').then(result => {
+                res.send(result.html)
+            });
         }
         catch (err) {
             console.log(err)
         }
     });
 
-    app.get("/posts2", async (req, res) => {
-        console.log('=>', req.params.posts)
+    app.get("/post2/:id", async (req, res) => {
+        console.log('=>', req.params.id)
         try {
             const response = await axios.get("https://jsonplaceholder.typicode.com/posts")
             // res.json(response.data);
             const actualPage = '/pages/index';
             const queryParams = { posts: response.data };
             // app.render(req, res, actualPage, queryParams);
-            app.render('/index');
+            res.render('/pages/index.vue');
         }
         catch (err) {
             console.log(err)
@@ -37,7 +52,7 @@ async function start() {
     });
 
 
-    app.get("/posts3", async (req, res) => {
+    app.get("/post3/:id", async (req, res) => {
         console.log('=>', req.params.posts)
         try {
             const response = await axios.get("https://jsonplaceholder.typicode.com/posts")
@@ -51,7 +66,7 @@ async function start() {
             console.log(err)
         }
     });
-// {{this.$route.params.yourParam}}
+    // {{this.$route.params.yourParam}}
 
     app.get("/posts4", async (req, res) => {
         console.log('=>', req.params.posts)
@@ -67,12 +82,6 @@ async function start() {
             console.log(err)
         }
     });
-
-    // We get Nuxt instance
-    const nuxt = await loadNuxt(isDev ? 'dev' : 'start')
-
-    // Render every route with Nuxt
-    app.use(nuxt.render)
 
     // Build only in dev mode with hot-reloading
     if (isDev) {
